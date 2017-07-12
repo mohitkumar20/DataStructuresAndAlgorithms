@@ -14,21 +14,6 @@ class entry
       }
 }
 
-class node
-{
-      int vertexNum;
-      node next;
-      int weight;
-}
-
-
- class graph
-{
-      ArrayList<node> list;
-      int V;
-      int E;
-}
-
 class MyComparator implements Comparator<entry>
 {
        public int compare(entry e1,entry e2)
