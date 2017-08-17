@@ -117,9 +117,10 @@ class priorityQueue
 		else
 			return j;
 	}
-	public void update(int vertexNum)
+	public void update(int vertexNum,int newCost)
 	{
 		int i = pos[vertexNum];
+        arr[i].cost = newCost; 
 		while((i - 1) / 2 >= 0)
 		{
 			if(arr[(i - 1) / 2].cost <= arr[i].cost)
@@ -151,13 +152,14 @@ class graph
 	node[] adjList;
 	int[] distance;
 	int[] path;
-	int MSTCost = 0;
+	long MSTCost = 0;
 	public graph(int V,int E)
 	{
 		this.V = V;
 		this.E = E;
 		adjList = new node[V];
-		path = new int[];
+        distance = new int[V];
+		path = new int[V];
 		for(int i = 0 ; i < V ; i++)
 		{
 			distance[i] = Integer.MAX_VALUE;
@@ -186,13 +188,14 @@ class graph
 	public void prim(int root)
 	{
 		priorityQueue pq = new priorityQueue(V);
+        int[] added = new int[V];
 		for(int i = 0 ; i < V ; i++)
 		{
 			if(i != root)
 			{
 				path[i] = -1;
 				distance[i] = Integer.MAX_VALUE;
-				pq.enqueue(new node(i,Integer.MAX_VALUE);
+				pq.enqueue(new node(i,Integer.MAX_VALUE));
 			}
 			else
 			{
@@ -206,34 +209,53 @@ class graph
 		{
 			node n = pq.dequeue();
 			int u = n.vertexNum;
+            added[u] = 1;
 			node adj = adjList[u].next;
 			while(adj != null)
 			{
-				int v = adj.vertexNum;
-				if(distance[v] > adj.cost && distance[v] == Integer.MAX_VALUE)
-				{
-					distance[v] = adj.cost;
-					path[v] = u;
-
-				}
-				else if(distance[v] > adj.cost)
-				{
-					distance[v] = adj.cost;
-					path[v] = u;
-					pq.update(v);
-				}
-
-				adj = adj.next;
+                int newCost = adj.cost;
+                if(distance[v] == Integer.MAX_VALUE)
+                {
+                    MSTCost += newCost;
+                    distance[v] = newCost;
+                    pq.update(v,newCost);
+                }
+                else if(distance[v] > newCost && added[v] == 0)
+                {
+                    MSTCost -= distance[v];
+                    distance[v] = newCost;
+                    MSTCost += distance[v];
+                    pq.update(v,newCost);
+                }
+                adj = adj.next;
 			}
 		}
+        System.out.println("MST Cost : " + MSTCost);
 	}
+
 }
 
 public class prim
 {
 	public static void main(String[] args)
 	{
+       Scanner sc = new Scanner(System.in);
+       System.out.println("Enter space separated V and E");
+       int V = sc.nextInt();
+       int E = sc.nextInt();
+       graph g = new graph(V,E);
+       //Enter space separated u v and cost of the edge  
+       System.out.println("Enter space separated u v and cost of the edge ");
+       for(int i = 0 ; i < E ; i++)
+       {
+           int u = sc.nextInt();
+           int v = sc.nextInt();
+           int cost = sc.nextInt();
+           g.addEdge(u,v,cost);
+       }
+       g.prim(0);
 
+       
 
 	}
 }
