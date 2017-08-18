@@ -211,6 +211,7 @@ class graph
 			node n = pq.dequeue();
 			int u = n.vertexNum;
             added[u] = 1;
+            MSTCost += n.cost;
 			node adj = adjList[u].next;
 			while(adj != null)
 			{
@@ -218,15 +219,12 @@ class graph
                 int v = adj.vertexNum;
                 if(distance[v] == Integer.MAX_VALUE)
                 {
-                    MSTCost += newCost;
                     distance[v] = newCost;
                     pq.update(v,newCost);
                 }
                 else if(distance[v] > newCost && added[v] == 0)
                 {
-                    MSTCost -= distance[v];
                     distance[v] = newCost;
-                    MSTCost += distance[v];
                     pq.update(v,newCost);
                 }
                 adj = adj.next;
