@@ -69,6 +69,7 @@ class priorityQueue
 		arr[0] = arr[size - 1];
 		int i = 0;
 		size--;
+        pos[arr[i].vertexNum] = i;
 		while(true)
 		{
 			if(2 * i + 2 < size)
@@ -87,7 +88,7 @@ class priorityQueue
 					i = smaller;
 				}
 			}
-			if(2 * i + 2 == size)
+            else if(2 * i + 2 == size)
 			{
 				if(arr[i].cost <= arr[2 * i + 1].cost)
 				{
@@ -214,6 +215,7 @@ class graph
 			while(adj != null)
 			{
                 int newCost = adj.cost;
+                int v = adj.vertexNum;
                 if(distance[v] == Integer.MAX_VALUE)
                 {
                     MSTCost += newCost;
@@ -230,7 +232,7 @@ class graph
                 adj = adj.next;
 			}
 		}
-        System.out.println("MST Cost : " + MSTCost);
+        System.out.println(MSTCost);
 	}
 
 }
@@ -240,18 +242,18 @@ public class prim
 	public static void main(String[] args)
 	{
        Scanner sc = new Scanner(System.in);
-       System.out.println("Enter space separated V and E");
+       //System.out.println("Enter space separated V and E");
        int V = sc.nextInt();
        int E = sc.nextInt();
        graph g = new graph(V,E);
-       //Enter space separated u v and cost of the edge  
-       System.out.println("Enter space separated u v and cost of the edge ");
+       ////Enter space separated u v and cost of the edge  
+       //System.out.println("Enter space separated u v and cost of the edge ");
        for(int i = 0 ; i < E ; i++)
        {
            int u = sc.nextInt();
            int v = sc.nextInt();
            int cost = sc.nextInt();
-           g.addEdge(u,v,cost);
+           g.addEdge(u - 1,v - 1,cost);
        }
        g.prim(0);
 
