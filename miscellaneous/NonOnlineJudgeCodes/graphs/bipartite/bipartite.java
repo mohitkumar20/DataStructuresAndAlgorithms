@@ -68,8 +68,24 @@ class graph
 	boolean isBipartite()
 	{
 		queue q = new queue(V);
-		color[0] = 0; // 0 represents red and 1 represents blue;
-		q.enqueue(new node(0));
+        int i = 0;
+        while(i < V)
+        {
+            if(color[i] == -1)
+            {
+                boolean ans = explore(q,color,i);
+                if(ans == false)
+                    return ans;
+            }
+            i++;
+        }
+        return true;
+	}
+
+    boolean explore(queue q,int[] color,int start)
+    {
+		color[start] = 0; // 0 represents red and 1 represents blue;
+		q.enqueue(new node(start));
 		while(!q.isEmpty())
 		{
 			node n = q.dequeue();
@@ -92,7 +108,11 @@ class graph
 			}
 		}
 		return true;
-	}
+
+
+    }
+
+
 	public void addEdge(int u,int v)
 	{
 		node newNode = new node(v);
