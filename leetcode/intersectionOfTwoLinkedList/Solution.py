@@ -27,7 +27,7 @@ class Solution:
                 list2 = list2.next
 
 
-        while(list1 is not None):
+        while(list1 is not None): # not need to check for list2 to end as both will end at the same time now.
             if(list1 is list2):
                 return list1
             list1 = list1.next
