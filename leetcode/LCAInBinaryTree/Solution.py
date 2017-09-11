@@ -1,8 +1,10 @@
-class TreeNode(object):
-    def __init__(self,x):
-        self.val = x
-        self.left = None
-        self.right = None
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
 
 class Solution(object):
 
@@ -32,7 +34,7 @@ class Solution(object):
             if(rightSearch == 2):
                 return 2
 
-            if(leaftSearch == 1 and rightSearch == 2):
+            if(leftSearch == 1 and rightSearch == 1):
                 self.lca = root
                 return 2
             if(leftSearch == 0 and rightSearch == 0):
@@ -49,4 +51,3 @@ class Solution(object):
                 self.lca = root
                 return 2
             return 1
-
