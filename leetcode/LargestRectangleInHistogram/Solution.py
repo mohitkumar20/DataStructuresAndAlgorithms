@@ -1,3 +1,5 @@
+'''think like following for the problem. for having a rectangle we need to know the boundary limits.
+'''
 class Solution(object):
 	def largestRectangleArea(self, arr):
 		"""
