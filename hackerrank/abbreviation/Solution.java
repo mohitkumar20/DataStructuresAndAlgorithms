@@ -19,101 +19,53 @@ public class Solution
 
     public static void func(char[] a,int n, char[] b, int m)
     {
-        int[][] dp = new int[n][m];
+        int[][] mat = new int[n + 1][m + 1];
+        for(int i = 0 ; i < n + 1 ; i++)
+            mat[i][0] = 0;
+        for(int i = 0 ; i < m + 1 ; i++)
+            mat[0][i] = 0;
+        char capStart = 65;
+        char capEnd = 90;
+        char smallStart = 97;
+        char smallEnd = 122;
         char diff = 32;
-        char startSmall = 65;
-        char endSmall = 90;
-        int max = 0;
-        if(a[0] == b[0] || b[0] + diff == a[0])
-            dp[0][0] = 1;
-        else
-            dp[0][0] = 0;
-        if(m == 1)
+        for(int i = 1 ; i < n + 1 ; i++)
         {
-            if(dp[0][0] == 1)
+            for(int j = 1 ; j < m + 1 ; j++)
             {
-                System.out.println("YES");
-                return;
-            }
-            else
-            {
-                System.out.println("NO");
-                return;
-            }
-        }
-        for(int i = 1 ; i < m ; i++)
-        {
-            if(a[0] == b[i] || b[i] + diff == a[0])
-            {
-                dp[0][i] = 1;
-            }
-            else
-            {
-                dp[0][i] = dp[0][i - 1];
-            }
-        }
-        for(int i = 1 ; i < n ; i++)
-        {
-            if(b[0] == a[i] || b[0] + diff == a[i])
-                dp[i][0] = 1;
-            else
-                dp[i][0] = dp[i - 1][0];
-        }
-
-        for(int i = 1 ; i < n ; i++)
-        {
-            int flag = 1;
-            if(a[i] >= startSmall && a[i] <= endSmall)
-                flag = 0;
-            for(int j = 1 ; j < m ; j++)
-            {
-                if(a[i] >= startSmall && a[i] <= endSmall)
+                if(a[i - 1] >= smallStart)
                 {
-                    if(a[i] == b[j])
+                    if(a[i - 1] - diff == b[j - 1])
                     {
-                        flag = 1;
-                        dp[i][j] = dp[i - 1][j - 1] + 1;
-                        if(dp[i][j] > max)
-                            max = dp[i][j];
-                        if(dp[i][j] == m)
-                        {
-                            System.out.println("here1");
-                            System.out.println("YES");
-                            return;
-                        }
+                        if(mat[i - 1][j] == j)
+                            mat[i][j] = mat[i - 1][j];
+                        else
+                            mat[i][j] = 1 + mat[i - 1][j - 1];
                     }
                     else
-                        dp[i][j] = Math.max(dp[i][j - 1],dp[i - 1][j]);
+                    {
+                        if(mat[i - 1][j] == j || mat[i][j - 1] == j)
+                            mat[i][j] = j;
+                        else
+                            mat[i][j] = Math.max(mat[i - 1][j],mat[i][j - 1]);
+                    }
                 }
                 else
                 {
-                    if(a[i] == b[j] || b[j] + diff == a[i])
+                    if(a[i - 1] == b[j - 1])
                     {
-                        dp[i][j] = dp[i - 1][j - 1] + 1;
-                        if(dp[i][j] > max)
-                            max = dp[i][j];
-                        if(dp[i][j] == m)
-                        {
-                            System.out.println("here2");
-                            System.out.println("YES");
-                            return;
-                        }
+                        mat[i][j] = 1 + mat[i - 1][j - 1];
                     }
                     else
-                        dp[i][j] = Math.max(dp[i][j - 1],dp[i - 1][j]);
+                    {
+                        mat[i][j] = mat[i][j - 1];
+                    }
                 }
             }
-            if(flag == 0)
-            {
-                System.out.println("here 3");
-                System.out.println("NO");
-                System.out.println("i : " + i + ", a[i] = " + a[i]);
-                return ;
-            }
         }
-        System.out.println("max : " + max + ", n = " + n + ", m = " + m);
-        System.out.println("here 4");
-        System.out.println("NO");
-        return;
+        if(mat[n][m] == m)
+            System.out.println("YES");
+        else
+            System.out.println("NO");
     }
 }
