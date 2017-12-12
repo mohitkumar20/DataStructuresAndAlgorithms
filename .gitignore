@@ -2,3 +2,5 @@
 *.swp
 *.class
 *.directory
+*.exe
+*.pdb
