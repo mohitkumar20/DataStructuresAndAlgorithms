@@ -4,3 +4,7 @@
 *.directory
 *.exe
 *.pdb
+*.toml
+*.lock
+*debug
+*rls
