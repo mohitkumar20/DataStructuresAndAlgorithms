@@ -24,9 +24,11 @@ public class Main
 
     public static void func(int n,int[] arr,int largest)
     {
-        int[] primes = findPrimes(largest / 2 + 1);
-        //int[] primes = findPrimes((int)Math.sqrt(largest));
-        int lenOfPrimes = primes.length;
+        int[] primes = new int[(largest / 2 + 1)];
+        //int primes = findPrimes(largest / 2 + 1,primeContainer);
+        //int lenOfPrimes = primes.length;
+        int lenOfPrimes = findPrimes(largest / 2 + 1,primes);
+        //int[] mat = new int[lenOfPrimes];
         int[] mat = new int[lenOfPrimes];
         for(int j = 0 ; j < lenOfPrimes ; j++)
         {
@@ -75,7 +77,7 @@ public class Main
         System.out.println(smallest);
     }
 
-    public static int[] findPrimes(int upto)
+    public static int findPrimes(int upto,int[] primeContainer)
     {
         boolean[] primes = new boolean[upto + 1];
         for(int i = 0 ; i < upto + 1 ; i++)
@@ -89,6 +91,7 @@ public class Main
         {
             if(primes[i] == true)
             {
+                primeContainer[count] = i;
                 count++;
                 if(i <= limit)
                 {
@@ -99,7 +102,7 @@ public class Main
                 }
             }
         }
-
+/*
         int[] primeContainer = new int[count];
         int index = 0;
         for(int i = 2 ; i < upto + 1 ; i++)
@@ -110,7 +113,7 @@ public class Main
                 if(index == count)
                     break;
             }
-        }
-        return primeContainer;
+        }*/
+        return count;
     }
 }
